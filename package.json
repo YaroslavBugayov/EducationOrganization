@@ -1,0 +1,21 @@
+{
+  "name": "educationorganization",
+  "version": "1.0.0",
+  "description": "diploma",
+  "main": "app.ts",
+  "scripts": {
+    "start": "tsc && node dist/app.js",
+    "dev": "ts-node-dev app.ts"
+  },
+  "author": "bugayov",
+  "license": "MIT License",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.4"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}
