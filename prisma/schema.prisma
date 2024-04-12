@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Group {
+  id      Int       @id @default(autoincrement())
+  name    String    @unique @db.VarChar(20)
+  student Student[]
+}
+
+model IndividualStudyPlan {
+  id      Int       @id @default(autoincrement())
+  student Student[]
+  subject Subject[]
+}
+
+model Student {
+  id                    Int                 @id @default(autoincrement())
+  name                  String              @db.VarChar(50)
+  group                 Group               @relation(fields: [groupId], references: [id])
+  groupId               Int
+  studyPlan             IndividualStudyPlan @relation(fields: [individualStudyPlanId], references: [id])
+  individualStudyPlanId Int
+}
+
+model Subject {
+  id        Int                   @id @default(autoincrement())
+  name      String                @db.VarChar(50)
+  rso       RSO[]
+  deadline  Deadline[]
+  info      Info[]
+  teacher   Teacher?              @relation(fields: [teacherId], references: [id])
+  teacherId Int?
+  studyPlan IndividualStudyPlan[]
+}
+
+model RSO {
+  id         Int     @id @default(autoincrement())
+  typeOfWork String  @db.VarChar(50)
+  score      Int
+  subject    Subject @relation(fields: [subjectId], references: [id])
+  subjectId  Int
+}
+
+model Deadline {
+  id          Int      @id @default(autoincrement())
+  typeOfWork  String   @db.VarChar(50)
+  closingDate DateTime
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  subjectId   Int
+}
+
+model Info {
+  id        Int     @id @default(autoincrement())
+  text      String  @db.VarChar(200)
+  subject   Subject @relation(fields: [subjectId], references: [id])
+  subjectId Int
+}
+
+model Teacher {
+  id      Int       @id @default(autoincrement())
+  name    String    @db.VarChar(50)
+  subject Subject[]
+}
