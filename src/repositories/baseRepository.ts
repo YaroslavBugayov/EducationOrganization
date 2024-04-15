@@ -27,6 +27,6 @@ export class BaseRepository {
     async delete(id: number) {
         return this.model.destroy({
             where: {id}
-        })
+        });
     }
 }
