@@ -1,4 +1,4 @@
-import {BaseRepository} from "./baseRepository";
+import {BaseRepository} from "./base.repository";
 import {Group} from "../database";
 
 export class GroupRepository extends BaseRepository {

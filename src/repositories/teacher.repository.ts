@@ -1,4 +1,4 @@
-import {BaseRepository} from "./baseRepository";
+import {BaseRepository} from "./base.repository";
 import {Teacher} from "../database";
 
 export class TeacherRepository extends BaseRepository {

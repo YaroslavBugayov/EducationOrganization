@@ -1,5 +1,5 @@
 import {groupModel, deadlineModel, infoModel, rsoModel, studentModel,
-    subjectModel, teacherModel} from "../models";
+    subjectModel, teacherModel} from "./models";
 import {sequelize} from "./db";
 
 export const Group = groupModel(sequelize);

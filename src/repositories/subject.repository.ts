@@ -1,4 +1,4 @@
-import {BaseRepository} from "./baseRepository";
+import {BaseRepository} from "./base.repository";
 import {Subject} from "../database";
 
 export class SubjectRepository extends BaseRepository {

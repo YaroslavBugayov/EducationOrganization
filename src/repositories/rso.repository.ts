@@ -1,4 +1,4 @@
-import {BaseRepository} from "./baseRepository";
+import {BaseRepository} from "./base.repository";
 import {RSO} from "../database";
 
 export class RSORepository extends BaseRepository {

@@ -1,4 +1,4 @@
-import {BaseRepository} from "./baseRepository";
+import {BaseRepository} from "./base.repository";
 import {Info} from "../database";
 
 export class InfoRepository extends BaseRepository {
