@@ -6,16 +6,15 @@ export const tokenService = {
     generateTokens(userId: number) : { accessToken: string, refreshToken: string } {
         const accessToken = sign(
             { userId: userId },
-            process.env.JWT_ACCESS_SECRET as string,
+            process.env.JWT_ACCESS_SECRET as jwt.Secret,
             { expiresIn: '30m' }
         );
 
         const refreshToken = sign(
             { userId: userId },
-            process.env.JWT_REFRESH_SECRET as string,
+            process.env.JWT_REFRESH_SECRET as jwt.Secret,
             { expiresIn: '30d' }
         );
-
         return { accessToken, refreshToken };
     },
 

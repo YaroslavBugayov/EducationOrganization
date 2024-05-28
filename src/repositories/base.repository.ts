@@ -13,6 +13,12 @@ export class BaseRepository {
         });
     }
 
+    async getByAttribute(attribute: any): Promise<Model | null> {
+        return this.model.findOne({
+            where: attribute
+        })
+    }
+
     async getAll(): Promise<Model[]> {
         return this.model.findAll();
     }

@@ -15,6 +15,7 @@ export function teacherModel(sequelize: Sequelize): ModelStatic<Model<TeacherMod
     login: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     password: {
       type: DataTypes.STRING,
@@ -23,6 +24,6 @@ export function teacherModel(sequelize: Sequelize): ModelStatic<Model<TeacherMod
     refreshToken: {
       type: DataTypes.STRING,
       allowNull: true,
-    },
+    }
   });
 }

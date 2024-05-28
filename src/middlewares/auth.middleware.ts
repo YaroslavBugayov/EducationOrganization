@@ -1,6 +1,6 @@
 import {NextFunction, Response} from "express";
 import {ApiError} from "../errors/api.error";
-import {tokenService} from "../services/token.service";
+import {tokenService} from "../services";
 import {AuthenticatedRequest} from "../interfaces/authenticated-request";
 
 export default (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
