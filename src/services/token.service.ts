@@ -1,8 +1,6 @@
 import jwt, {sign} from "jsonwebtoken";
-import {JwtPayloadModel} from '../models/jwt-payload.model';
-import {TeacherModel} from "../models/teacher.model";
-import {teacherRepository} from "../repositories";
-import {Model} from "sequelize";
+import {JwtPayloadModel, TeacherModel} from '../models';
+import {teacherService} from ".";
 
 export const tokenService = {
     generateTokens(userId: number) : { accessToken: string, refreshToken: string } {
@@ -22,20 +20,18 @@ export const tokenService = {
     },
 
     async saveToken(userId: number, refreshToken: string) : Promise<TeacherModel | null> {
-        await teacherRepository.update(userId, { refreshToken: refreshToken });
-        const teacher: Model<TeacherModel> | null = await teacherRepository.getById(userId);
-        return teacher ? teacher.toJSON() : null;
+        await teacherService.update(userId, { refreshToken: refreshToken });
+        return teacherService.getById(userId);
     },
 
     async removeToken(userId: number) : Promise<TeacherModel | null> {
-        await teacherRepository.update(userId, { refreshToken: null });
-        const teacher: Model<TeacherModel> | null = await teacherRepository.getById(userId);
-        return teacher ? teacher.toJSON() : null;
+        await teacherService.update(userId, { refreshToken: null });
+        return teacherService.getById(userId);
     },
 
     async getToken(userId: number) : Promise<string | null> {
-        const teacher: Model<TeacherModel> | null = await teacherRepository.getById(userId);
-        return teacher ? teacher.toJSON().refreshToken : null;
+        const teacher: TeacherModel | null = await teacherService.getById(userId);
+        return teacher ? teacher.refreshToken : null;
     },
 
     validateAccessToken(token: string) : number | null {

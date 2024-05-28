@@ -22,7 +22,7 @@ export function teacherModel(sequelize: Sequelize): ModelStatic<Model<TeacherMod
     },
     refreshToken: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
   });
 }
