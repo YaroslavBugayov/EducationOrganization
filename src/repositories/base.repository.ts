@@ -1,7 +1,7 @@
 import {Model, ModelStatic} from "sequelize";
 
 export class BaseRepository {
-    constructor(private model: ModelStatic<Model>) { }
+    constructor(protected model: ModelStatic<Model>) { }
 
     async create(data: any): Promise<Model> {
         return this.model.create(data);
