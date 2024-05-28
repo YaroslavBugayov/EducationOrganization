@@ -1,5 +1,5 @@
 import { DataTypes, Model, ModelStatic, Sequelize } from 'sequelize';
-import {TeacherModel} from "../../models/teacher.model";
+import {TeacherModel} from "../../models";
 
 export function teacherModel(sequelize: Sequelize): ModelStatic<Model<TeacherModel>> {
   return sequelize.define('Teacher', {

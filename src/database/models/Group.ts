@@ -1,6 +1,7 @@
 import { DataTypes, Model, ModelStatic, Sequelize } from 'sequelize';
+import {GroupModel} from "../../models";
 
-export function groupModel(sequelize: Sequelize): ModelStatic<Model> {
+export function groupModel(sequelize: Sequelize): ModelStatic<Model<GroupModel>> {
   return sequelize.define('Group', {
     id: {
       type: DataTypes.INTEGER,
