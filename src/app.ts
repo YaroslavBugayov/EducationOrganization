@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import {subjectRoute, teacherRoute} from "./routes";
-import {errorMiddleware} from "./middlewares";
+import {errorMiddleware, validationMiddleware} from "./middlewares";
 
 dotenv.config();
 

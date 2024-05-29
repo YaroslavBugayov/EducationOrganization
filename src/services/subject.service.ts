@@ -1,6 +1,7 @@
 import {Model} from "sequelize";
 import {subjectRepository} from "../repositories";
 import {SubjectModel} from "../models";
+import {ApiError} from "../errors/api.error";
 
 export const subjectService = {
     async getById(id: number): Promise<SubjectModel | null> {
@@ -13,9 +14,14 @@ export const subjectService = {
         return teacher.toJSON();
     },
 
-    async update(id: number, data: any): Promise<SubjectModel | null> {
-        await subjectRepository.update(id, data);
-        return this.getById(id);
+    async changeName(oldName: string, newName: string): Promise<SubjectModel | null> {
+        const subject: Model<SubjectModel> | null = await subjectRepository.getByAttribute({ name: oldName });
+        if (!subject) {
+            throw ApiError.NotFoundError("Subject not found");
+        }
+        await subjectRepository.changeName(oldName, newName);
+        const newSubject: Model<SubjectModel> | null = await subjectRepository.getByAttribute({ name: newName });
+        return newSubject ? newSubject.toJSON() : null;
     },
 
     async delete(id: number): Promise<number> {

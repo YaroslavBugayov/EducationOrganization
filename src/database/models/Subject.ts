@@ -11,6 +11,7 @@ export function subjectModel(sequelize: Sequelize): ModelStatic<Model<SubjectMod
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
   });
 }

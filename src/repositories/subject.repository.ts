@@ -14,7 +14,14 @@ export class SubjectRepository extends BaseRepository {
             where: {
                 name: sequelize.where(sequelize.fn('LOWER', sequelize.col('name')), 'LIKE', `%${text}%`)
             }
-        })
+        });
+    }
+
+    async changeName(oldName: string, newName: string): Promise<[number]> {
+        return this.model.update(
+            { name: newName },
+            { where: { name: oldName } }
+        )
     }
 }
 
