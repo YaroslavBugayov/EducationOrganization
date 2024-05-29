@@ -12,6 +12,6 @@ export function subjectModel(sequelize: Sequelize): ModelStatic<Model<SubjectMod
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-    },
+    }
   });
 }

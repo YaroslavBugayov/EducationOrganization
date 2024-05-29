@@ -14,3 +14,7 @@ export const updateSubjectValidator = [
     body('oldName', 'Empty oldName').not().isEmpty(),
     body('newName', 'Empty newName').not().isEmpty()
 ]
+
+export const subjectValidator = [
+    body('name', 'Empty name').not().isEmpty(),
+]

@@ -1,5 +1,5 @@
 import { sequelize } from "../db";
-import { Student, Teacher, Info, Subject, RSO, Group, Deadline } from "../index";
+import { Student, Teacher, Info, Subject, RSO, Group, Deadline } from "../db";
 
 async function syncDatabase() {
     try {

@@ -1,5 +1,5 @@
 import {BaseRepository} from "./base.repository";
-import {Student} from "../database";
+import {Student} from "../database/db";
 
 export class StudentRepository extends BaseRepository {
     constructor() {

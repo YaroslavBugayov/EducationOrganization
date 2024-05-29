@@ -12,13 +12,13 @@ export default (req: AuthenticatedRequest, res: Response, next: NextFunction) =>
         }
 
         const accessToken = authHeader.split(' ')[1];
-        const userId = tokenService.validateAccessToken(accessToken);
+        const teacherId = tokenService.validateAccessToken(accessToken);
 
-        if (!userId) {
+        if (!teacherId) {
             return next(ApiError.UnauthorizedError());
         }
 
-        req.userId = userId;
+        req.teacherId = teacherId;
         next();
     } catch (error) {
         return next(ApiError.UnauthorizedError());

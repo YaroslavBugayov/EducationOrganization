@@ -1,5 +1,5 @@
 import {BaseRepository} from "./base.repository";
-import {Subject} from "../database";
+import {Subject} from "../database/db";
 import {Model} from "sequelize";
 import {sequelize} from "../database/db";
 
@@ -22,6 +22,12 @@ export class SubjectRepository extends BaseRepository {
             { name: newName },
             { where: { name: oldName } }
         )
+    }
+
+    async deleteByName(name: string): Promise<number> {
+        return this.model.destroy({
+            where: { name: name }
+        })
     }
 }
 

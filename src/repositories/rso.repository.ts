@@ -1,5 +1,5 @@
 import {BaseRepository} from "./base.repository";
-import {RSO} from "../database";
+import {RSO} from "../database/db";
 
 export class RSORepository extends BaseRepository {
     constructor() {
