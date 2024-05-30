@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import {infoRoute, rsoRoute, subjectRoute, teacherRoute} from "./routes";
+import {deadlineRoute, infoRoute, rsoRoute, subjectRoute, teacherRoute} from "./routes";
 import {errorMiddleware} from "./middlewares";
 
 dotenv.config();
@@ -18,6 +18,7 @@ app.use('/api', teacherRoute);
 app.use('/api/subject', subjectRoute);
 app.use('/api/rso', rsoRoute);
 app.use('/api/info', infoRoute);
+app.use('/api/deadline', deadlineRoute);
 
 app.use(errorMiddleware);
 

@@ -23,7 +23,7 @@ export const rsoService = {
     },
 
     async delete(rsoId: number, teacherId: number): Promise<boolean> {
-        const rso = await subjectRepository.getById(rsoId);
+        const rso: Model<RSOModel> | null = await rsoRepository.getById(rsoId);
         if (!rso) {
             throw ApiError.NotFoundError("RSO not found");
         }

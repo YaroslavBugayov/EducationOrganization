@@ -1,6 +1,5 @@
 import {Request, Response, NextFunction} from "express";
-import {authService, teacherService} from "../services";
-import {validationResult} from "express-validator";
+import {authService} from "../services";
 
 export const teacherController = {
     async login(req: Request, res: Response, next: NextFunction) : Promise<Response | undefined> {
@@ -9,8 +8,9 @@ export const teacherController = {
             const { refreshToken, accessToken, teacherModel } = await authService.login(login, password);
 
             res.cookie('refreshToken', refreshToken, { maxAge: 30 * 24 * 360000, httpOnly: true });
-
-            return res.status(200).json({ "teacher": teacherModel, "accessToken": accessToken });
+            const teacherName = teacherModel.name;
+            const teacherLogin = teacherModel.login;
+            return res.status(200).json({ "teacher": { teacherName, teacherLogin }, "accessToken": accessToken });
         } catch (error) {
             next(error)
         }

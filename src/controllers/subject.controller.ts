@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from "express";
-import {subjectService} from "../services";
+import {deadlineService, infoService, rsoService, subjectService} from "../services";
 import {AuthenticatedRequest} from "../interfaces/authenticated-request";
 import {SubjectModel} from "../models";
 
@@ -10,6 +10,19 @@ export const subjectController = {
             const subjects = await subjectService.search(text);
 
             return res.status(200).json({ "subjects": subjects });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    async get(req: Request, res: Response, next: NextFunction) : Promise<Response | undefined> {
+        try {
+            const { id } = req.body;
+            const subject = await subjectService.getById(id);
+            const rsos = await rsoService.getAllBySubjectId(id);
+            const infos = await infoService.getAllBySubjectId(id);
+            const deadlines = await deadlineService.getAllBySubjectId(id);
+            return res.status(200).json({ "subjects": subject, "rsos": rsos, "infos": infos, "deadlines": deadlines });
         } catch (error) {
             next(error);
         }

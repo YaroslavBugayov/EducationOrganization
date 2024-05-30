@@ -23,7 +23,7 @@ export const infoService = {
     },
 
     async delete(infoId: number, teacherId: number): Promise<boolean> {
-        const info = await subjectRepository.getById(infoId);
+        const info: Model<InfoModel> | null = await infoRepository.getById(infoId);
         if (!info) {
             throw ApiError.NotFoundError("Info not found");
         }
