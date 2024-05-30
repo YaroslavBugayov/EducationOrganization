@@ -1,7 +1,7 @@
 import express from "express";
 import {createRsoValidator, deleteRsoValidator} from "../validators/validator";
 import {authMiddleware, validationMiddleware} from "../middlewares";
-import {rsoController} from "../controllers/rso.controller";
+import {rsoController} from "../controllers";
 
 const router = express.Router();
 

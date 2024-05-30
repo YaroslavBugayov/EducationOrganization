@@ -31,3 +31,12 @@ export const createRsoValidator = [
 export const deleteRsoValidator = [
     body('rsoId', 'Empty id').not().isEmpty(),
 ]
+
+export const createInfoValidator = [
+    body('text', 'Empty text').not().isEmpty(),
+    body('subjectId', 'Empty subject id').not().isEmpty(),
+]
+
+export const deleteInfoValidator = [
+    body('infoId', 'Empty id').not().isEmpty(),
+]
