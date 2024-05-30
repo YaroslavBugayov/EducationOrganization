@@ -27,8 +27,8 @@ export const subjectService = {
         return newSubject ? newSubject.toJSON() : null;
     },
 
-    async delete(name: string, teacherId: number): Promise<boolean> {
-        const subject: Model<SubjectModel> | null = await subjectRepository.getByAttribute({ name: name });
+    async delete(subjectId: number, teacherId: number): Promise<boolean> {
+        const subject: Model<SubjectModel> | null = await subjectRepository.getById(subjectId);
         if (!subject) {
             throw ApiError.NotFoundError("Subject not found");
         }
@@ -36,7 +36,7 @@ export const subjectService = {
             throw ApiError.ForbiddenError();
         }
 
-        const result = await subjectRepository.deleteByName(name);
+        const result = await subjectRepository.delete(subjectId);
         if (result == 0) {
             throw ApiError.NotFoundError("Subject not found");
         }

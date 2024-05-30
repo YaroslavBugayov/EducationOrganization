@@ -15,6 +15,19 @@ export const updateSubjectValidator = [
     body('newName', 'Empty newName').not().isEmpty()
 ]
 
-export const subjectValidator = [
+export const createSubjectValidator = [
     body('name', 'Empty name').not().isEmpty(),
+]
+
+export const deleteSubjectValidator = [
+    body('name', 'Empty name').not().isEmpty(),
+]
+
+export const createRsoValidator = [
+    body('typeOfWork', 'Empty type of work').not().isEmpty(),
+    body('subjectId', 'Empty subject id').not().isEmpty(),
+]
+
+export const deleteRsoValidator = [
+    body('rsoId', 'Empty id').not().isEmpty(),
 ]

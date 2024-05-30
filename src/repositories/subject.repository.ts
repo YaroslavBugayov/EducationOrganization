@@ -23,12 +23,6 @@ export class SubjectRepository extends BaseRepository {
             { where: { name: oldName } }
         )
     }
-
-    async deleteByName(name: string): Promise<number> {
-        return this.model.destroy({
-            where: { name: name }
-        })
-    }
 }
 
 const subjectRepository = new SubjectRepository();

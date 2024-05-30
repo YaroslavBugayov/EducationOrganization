@@ -40,9 +40,9 @@ export const subjectController = {
 
     async delete(req: AuthenticatedRequest, res: Response, next: NextFunction) : Promise<Response | undefined> {
         try {
-            const { name } = req.body;
+            const { subjectId } = req.body;
             const teacherId = req.teacherId as number;
-            const success = await subjectService.delete(name, teacherId);
+            const success = await subjectService.delete(subjectId, teacherId);
             return res.status(200).json({ "success": success });
         } catch (error) {
             next(error);
