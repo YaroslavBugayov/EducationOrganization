@@ -1,4 +1,4 @@
-import { body } from "express-validator"
+import {body, param} from "express-validator"
 
 export const loginValidator = [
     body('login', 'Empty login').not().isEmpty(),
@@ -11,7 +11,8 @@ export const searchSubjectValidator = [
 ]
 
 export const getSubjectValidator = [
-    body('id', 'Empty text').not().isEmpty(),
+    param('id', 'Empty id').not().isEmpty(),
+    param('id', 'Id should be numeric').not().isNumeric,
 ]
 
 export const updateSubjectValidator = [

@@ -1,7 +1,8 @@
 import {NextFunction, Request, Response} from "express";
-import {deadlineService, infoService, rsoService, subjectService} from "../services";
-import {AuthenticatedRequest} from "../interfaces/authenticated-request";
-import {SubjectModel} from "../models";
+import {deadlineService, infoService, rsoService, subjectService, teacherService} from "../services";
+import {AuthenticatedRequest} from "../interfaces/authenticated.request";
+import {DeadlineResponseModel, InfoModel, RSOModel, SubjectModel, TeacherModel} from "../models";
+import {ApiError} from "../errors/api.error";
 
 export const subjectController = {
     async search(req: Request, res: Response, next: NextFunction) : Promise<Response | undefined> {
@@ -17,12 +18,24 @@ export const subjectController = {
 
     async get(req: Request, res: Response, next: NextFunction) : Promise<Response | undefined> {
         try {
-            const { id } = req.body;
-            const subject = await subjectService.getById(id);
-            const rsos = await rsoService.getAllBySubjectId(id);
-            const infos = await infoService.getAllBySubjectId(id);
-            const deadlines = await deadlineService.getAllBySubjectId(id);
-            return res.status(200).json({ "subjects": subject, "rsos": rsos, "infos": infos, "deadlines": deadlines });
+            const id: number = Number(req.params.id);
+            if (isNaN(id)) {
+                throw ApiError.BadRequest("Invalid id");
+            }
+            const subject: SubjectModel = await subjectService.getById(id);
+            const subjectId = subject.id
+            const subjectName = subject.name
+            const rsos: RSOModel[] = await rsoService.getAllBySubjectId(id);
+            const infos: InfoModel[] = await infoService.getAllBySubjectId(id);
+            const deadlines: DeadlineResponseModel[] = await deadlineService.getAllBySubjectId(id);
+            const teacher: TeacherModel = await teacherService.getById(subject.teacherId);
+            const teacherName: string = teacher.name;
+            return res.status(200).json({
+                "subject": { id: subjectId, name: subjectName, teacherName: teacherName },
+                "rsos": rsos,
+                "infos": infos,
+                "deadlines": deadlines }
+            );
         } catch (error) {
             next(error);
         }

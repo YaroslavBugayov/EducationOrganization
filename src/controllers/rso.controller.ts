@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 import {rsoService} from "../services";
-import {AuthenticatedRequest} from "../interfaces/authenticated-request";
+import {AuthenticatedRequest} from "../interfaces/authenticated.request";
 import {RSOModel} from "../models";
 
 export const rsoController = {

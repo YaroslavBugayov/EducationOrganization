@@ -6,6 +6,8 @@ import { JwtPayloadModel } from "./jwt-payload.model";
 import { StudentModel } from "./student.model";
 import { SubjectModel } from "./subject.model";
 import { TeacherModel } from "./teacher.model";
+import { DeadlineResponseModel } from "./deadlineResponse.model";
+import {SubjectResponseModel} from "./subjectResponse.model";
 
 export { GroupModel, DeadlineModel, InfoModel, RSOModel, StudentModel,
-    SubjectModel, TeacherModel, JwtPayloadModel };
+    SubjectModel, TeacherModel, JwtPayloadModel, DeadlineResponseModel, SubjectResponseModel };

@@ -1,12 +1,15 @@
 import {Model} from "sequelize";
-import {subjectRepository} from "../repositories";
-import {SubjectModel} from "../models";
+import {subjectRepository, teacherRepository} from "../repositories";
+import {SubjectModel, SubjectResponseModel} from "../models";
 import {ApiError} from "../errors/api.error";
 
 export const subjectService = {
-    async getById(id: number): Promise<SubjectModel | null> {
+    async getById(id: number): Promise<SubjectModel> {
         const subject: Model<SubjectModel> | null = await subjectRepository.getById(id);
-        return subject ? subject.toJSON() : null;
+        if (!subject) {
+            throw ApiError.NotFoundError("Subject not found");
+        }
+        return subject.toJSON();
     },
 
     async create(data: SubjectModel): Promise<SubjectModel> {
@@ -44,8 +47,22 @@ export const subjectService = {
         return true;
     },
 
-    async search(text: string): Promise<SubjectModel[]> {
-        const subject: Model<SubjectModel>[] | null = await subjectRepository.search(text);
-        return subject ? subject.map(element => element.toJSON()) : [];
+    async search(text: string): Promise<SubjectResponseModel[]> {
+        let subjects: Model<SubjectModel>[] | null = await subjectRepository.search(text.toLowerCase());
+        if (!subjects) {
+            subjects = []
+        }
+        return await Promise.all(subjects.map(async element => {
+            const teacher = await teacherRepository.getById(element.toJSON().teacherId)
+            if (!teacher) {
+                throw ApiError.NotFoundError("Teacher not found");
+            }
+            const res: SubjectResponseModel = {
+                id: element.toJSON().id as number,
+                name: element.toJSON().name,
+                teacherName: teacher.toJSON().name
+            }
+            return res
+        }))
     }
 }

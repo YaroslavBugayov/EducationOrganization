@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 import {infoService} from "../services";
-import {AuthenticatedRequest} from "../interfaces/authenticated-request";
+import {AuthenticatedRequest} from "../interfaces/authenticated.request";
 import {InfoModel} from "../models";
 
 export const infoController = {

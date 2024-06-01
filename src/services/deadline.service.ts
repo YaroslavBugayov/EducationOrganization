@@ -1,12 +1,16 @@
 import {Model} from "sequelize";
 import {deadlineRepository, groupRepository, subjectRepository} from "../repositories";
-import {DeadlineModel, GroupModel, SubjectModel} from "../models";
+import {DeadlineModel, DeadlineResponseModel, GroupModel, SubjectModel} from "../models";
 import {ApiError} from "../errors/api.error";
+import {groupService} from "./group.service";
 
 export const deadlineService = {
-    async getById(id: number): Promise<DeadlineModel | null> {
+    async getById(id: number): Promise<DeadlineModel> {
         const deadline: Model<DeadlineModel> | null = await deadlineRepository.getById(id);
-        return deadline ? deadline.toJSON() : null;
+        if (!deadline) {
+            throw ApiError.NotFoundError("Info not found");
+        }
+        return deadline.toJSON();
     },
 
     async create(deadlineDate: Date, groupName: string, subjectId: number, teacherId: number): Promise<DeadlineModel> {
@@ -47,8 +51,20 @@ export const deadlineService = {
         return true;
     },
 
-    async getAllBySubjectId(subjectId: number): Promise<DeadlineModel[]> {
+    async getAllBySubjectId(subjectId: number): Promise<DeadlineResponseModel[]> {
         const deadlines: Model<DeadlineModel>[] | null = await deadlineRepository.getAllBySubjectId(subjectId);
-        return deadlines ? deadlines.map(element => element.toJSON()) : [];
+        const deadlineModels: DeadlineModel[] = deadlines.map(element => element.toJSON())
+        const deadlinesWithGroup: DeadlineResponseModel[] = await Promise.all(deadlineModels.map(async element => {
+            let group: GroupModel | null = null
+            if (element.groupId) {
+                 group = await groupService.getById(element.groupId)
+            }
+            return {
+                id: element.id as number,
+                deadlineDate: element.deadlineDate,
+                groupName: group ? group.name : null
+            } as DeadlineResponseModel
+        }))
+        return deadlines ? deadlinesWithGroup : [];
     }
 }

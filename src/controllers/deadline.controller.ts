@@ -1,4 +1,4 @@
-import {AuthenticatedRequest} from "../interfaces/authenticated-request";
+import {AuthenticatedRequest} from "../interfaces/authenticated.request";
 import {NextFunction, Response} from "express";
 import {DeadlineModel} from "../models";
 import {deadlineService} from "../services";

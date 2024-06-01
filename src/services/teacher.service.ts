@@ -1,11 +1,15 @@
 import {TeacherModel} from "../models";
 import {Model} from "sequelize";
 import {teacherRepository} from "../repositories";
+import {ApiError} from "../errors/api.error";
 
 export const teacherService = {
-    async getById(id: number): Promise<TeacherModel | null> {
+    async getById(id: number): Promise<TeacherModel> {
         const teacher: Model<TeacherModel> | null = await teacherRepository.getById(id);
-        return teacher ? teacher.toJSON() : null;
+        if (!teacher) {
+            throw ApiError.NotFoundError("Teacher not found");
+        }
+        return teacher.toJSON();
     },
 
     async create(data: TeacherModel): Promise<TeacherModel> {

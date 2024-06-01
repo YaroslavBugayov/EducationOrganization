@@ -4,9 +4,12 @@ import {InfoModel, SubjectModel} from "../models";
 import {ApiError} from "../errors/api.error";
 
 export const infoService = {
-    async getById(id: number): Promise<InfoModel | null> {
+    async getById(id: number): Promise<InfoModel> {
         const info: Model<InfoModel> | null = await infoRepository.getById(id);
-        return info ? info.toJSON() : null;
+        if (!info) {
+            throw ApiError.NotFoundError("Info not found");
+        }
+        return info.toJSON();
     },
 
     async create(data: InfoModel, teacherId: number): Promise<InfoModel> {

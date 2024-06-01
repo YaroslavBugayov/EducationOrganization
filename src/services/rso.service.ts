@@ -4,9 +4,12 @@ import {RSOModel, SubjectModel} from "../models";
 import {ApiError} from "../errors/api.error";
 
 export const rsoService = {
-    async getById(id: number): Promise<RSOModel | null> {
+    async getById(id: number): Promise<RSOModel> {
         const rso: Model<RSOModel> | null = await rsoRepository.getById(id);
-        return rso ? rso.toJSON() : null;
+        if (!rso) {
+            throw ApiError.NotFoundError("RSO not found");
+        }
+        return rso.toJSON();
     },
 
     async create(data: RSOModel, teacherId: number): Promise<RSOModel> {

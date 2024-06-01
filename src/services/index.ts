@@ -5,5 +5,6 @@ import {subjectService} from "./subject.service";
 import {rsoService} from "./rso.service";
 import {infoService} from "./info.service";
 import {deadlineService} from "./deadline.service";
+import {groupService} from "./group.service";
 
-export { teacherService, tokenService, authService, subjectService, rsoService, infoService, deadlineService }
+export { teacherService, tokenService, authService, subjectService, rsoService, infoService, deadlineService, groupService }
