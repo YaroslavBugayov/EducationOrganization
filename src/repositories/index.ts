@@ -1,11 +1,10 @@
-import {groupRepository} from "./groupRepository";
-import {deadlineRepository} from "./deadlineRepository";
-import {individualStudyPlanRepository} from "./individualStudentPlanRepository";
-import {studentRepository} from "./studentRepository";
-import {infoRepository} from "./infoRepository";
-import {rsoRepository} from "./rsoRepository";
-import {subjectRepository} from "./subjectRepository";
-import {teacherRepository} from "./teacherRepository";
+import {groupRepository} from "./group.repository";
+import {deadlineRepository} from "./deadline.repository";
+import {studentRepository} from "./student.repository";
+import {infoRepository} from "./info.repository";
+import {rsoRepository} from "./rso.repository";
+import {subjectRepository} from "./subject.repository";
+import {teacherRepository} from "./teacher.repository";
 
 export { groupRepository, deadlineRepository, infoRepository, studentRepository,
-    subjectRepository, teacherRepository, individualStudyPlanRepository, rsoRepository };
+    subjectRepository, teacherRepository, rsoRepository };
