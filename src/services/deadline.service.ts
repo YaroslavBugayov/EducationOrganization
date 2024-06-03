@@ -13,7 +13,7 @@ export const deadlineService = {
         return deadline.toJSON();
     },
 
-    async create(deadlineDate: Date, groupName: string, subjectId: number, teacherId: number): Promise<DeadlineModel> {
+    async create(deadlineDate: Date, typeOfWork: string, groupName: string, subjectId: number, teacherId: number): Promise<DeadlineModel> {
         const subject: Model<SubjectModel> | null = await subjectRepository.getById(subjectId);
         if (!subject) {
             throw ApiError.NotFoundError("Subject not found");
@@ -21,13 +21,18 @@ export const deadlineService = {
         if (subject.toJSON().teacherId !== teacherId) {
             throw ApiError.ForbiddenError();
         }
-        const group: Model<GroupModel> | null = await groupRepository.getByAttribute({ name: groupName });
-        if (!group) {
-            throw ApiError.NotFoundError("Group not found");
+        if (groupName === "") {
+            const deadline: Model<DeadlineModel> = await deadlineRepository.create({ deadlineDate, typeOfWork, subjectId });
+            return deadline.toJSON();
+        } else {
+            const group: Model<GroupModel> | null = await groupRepository.getByAttribute({ name: groupName });
+            if (!group) {
+                throw ApiError.NotFoundError("Group not found");
+            }
+            const groupId = group.toJSON().id;
+            const deadline: Model<DeadlineModel> = await deadlineRepository.create({ deadlineDate, typeOfWork, groupId, subjectId });
+            return deadline.toJSON();
         }
-        const groupId = group.toJSON().id;
-        const deadline: Model<DeadlineModel> = await deadlineRepository.create({ deadlineDate, groupId, subjectId });
-        return deadline.toJSON();
     },
 
     async delete(deadlineId: number, teacherId: number): Promise<boolean> {
@@ -61,6 +66,7 @@ export const deadlineService = {
             }
             return {
                 id: element.id as number,
+                typeOfWork: element.typeOfWork as string,
                 deadlineDate: element.deadlineDate,
                 groupName: group ? group.name : null
             } as DeadlineResponseModel

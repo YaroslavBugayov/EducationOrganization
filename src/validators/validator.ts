@@ -49,7 +49,7 @@ export const deleteInfoValidator = [
 export const createDeadlineValidator = [
     body('deadlineDate', 'Empty deadline date').not().isEmpty(),
     body('deadlineDate', 'Date should be written in the format 01:01:2001').matches(/^(0[1-9]|[12][0-9]|3[01]):(0[1-9]|1[0-2]):\d{4}$/),
-    body('groupName', 'Empty group name').not().isEmpty(),
+    body('typeOfWork', 'Empty type of work').not().isEmpty(),
     body('subjectId', 'Empty subject id').not().isEmpty(),
 ]
 

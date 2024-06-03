@@ -6,13 +6,11 @@ import {deadlineService} from "../services";
 export const deadlineController = {
     async create(req: AuthenticatedRequest, res: Response, next: NextFunction) : Promise<Response | undefined> {
         try {
-            const { deadlineDate, groupName, subjectId } = req.body;
+            const { deadlineDate, typeOfWork, groupName, subjectId } = req.body;
             const teacherId = req.teacherId as number;
-            console.log(deadlineDate.split(":"))
             const [ day, month, year ] = deadlineDate.split(":");
-            console.log(`${day.valueOf()} ${month} ${year}`);
             const date = new Date(`${year}-${month}-${day}`);
-            const deadline: DeadlineModel = await deadlineService.create(date, groupName, subjectId, teacherId);
+            const deadline: DeadlineModel = await deadlineService.create(date, typeOfWork, groupName, subjectId, teacherId);
             return res.status(200).json({ "deadline": deadline });
         } catch (error) {
             next(error);

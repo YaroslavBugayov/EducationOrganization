@@ -8,6 +8,10 @@ export function deadlineModel(sequelize: Sequelize): ModelStatic<Model<DeadlineM
       primaryKey: true,
       autoIncrement: true,
     },
+    typeOfWork: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     deadlineDate: {
       type: DataTypes.DATE,
       allowNull: false,
